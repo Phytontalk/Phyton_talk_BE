@@ -19,4 +19,4 @@
 
 
 ### 예시
-[feat] : update Member Entity
+멤버 엔티티 생성 > [feat] : add Member Entity
