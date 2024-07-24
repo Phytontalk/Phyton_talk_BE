@@ -1,13 +1,18 @@
 package like_lion.phytontalk.quiz;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
 
 @Entity
 @Table(name = "Quiz")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Quiz {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "quiz_id") // 퀴즈 아이디
     private long quizId;
 
@@ -26,7 +31,7 @@ public class Quiz {
     @Column(name = "created_at", nullable = false) // 생성 일자
     private Timestamp createdAt;
 
-    @Column(name = "updated_at", nullable = true) // 수정 일자
+    @Column(name = "updated_at") // 수정 일자
     private Timestamp updatedAt;
 
     @Column(name = "is_deleted", nullable = false) // 삭제 여부
