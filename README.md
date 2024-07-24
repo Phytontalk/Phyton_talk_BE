@@ -1,5 +1,6 @@
 # Phyton_talk_BE
 
+
 ## 커밋 컨벤션
 ### 기본 형태
 [type] : subject
@@ -13,10 +14,11 @@
 - comment : 주석 추가 및 변경
 - remove : 파일, 폴더 삭제
 - rename : 파일, 폴더명 수정
+- chore : 그외 나머지
 
 ### subject
 영어로 작성할 경우 동사원형을 가장 앞에 작성
 
 
-### 예시
+### Example
 멤버 엔티티 생성 > [feat] : add Member Entity
