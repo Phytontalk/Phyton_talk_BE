@@ -2,14 +2,16 @@ package like_lion.phytontalk.quiz;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
 
 @Entity
 @Table(name = "Quiz")
-@NoArgsConstructor
-@AllArgsConstructor
+@Data   // getter setter 자동 생성
+@NoArgsConstructor  // 기본 생성자
+@AllArgsConstructor // 모든 파라미터 받는 생성자
 public class Quiz {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,14 +28,11 @@ public class Quiz {
     private String type;
 
     @Column(name = "frequency", nullable = false) // 퀴즈 출제 빈도
-    private int frequency;
+    private int frequency = 0; // 기본값 0으로 설정
 
     @Column(name = "created_at", nullable = false) // 생성 일자
     private Timestamp createdAt;
 
     @Column(name = "updated_at") // 수정 일자
     private Timestamp updatedAt;
-
-    @Column(name = "is_deleted", nullable = false) // 삭제 여부
-    private boolean isDeleted;
 }
