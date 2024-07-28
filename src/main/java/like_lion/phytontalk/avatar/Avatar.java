@@ -1,10 +1,10 @@
 package like_lion.phytontalk.avatar;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Column;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
@@ -22,7 +22,6 @@ public class Avatar {
     @Column(length = 50, nullable = true)
     private String image;
 
-    // Custom constructor for image field
     public Avatar(String image) {
         this.image = image;
     }
