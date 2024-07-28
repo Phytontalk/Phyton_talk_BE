@@ -35,4 +35,8 @@ public class Quiz {
 
     @Column(name = "updated_at") // 수정 일자
     private Timestamp updatedAt;
+
+
+//    @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<###> ###; dailyQuiz
 }
