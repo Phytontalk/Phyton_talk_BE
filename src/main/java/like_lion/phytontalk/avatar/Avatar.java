@@ -5,8 +5,14 @@ import javax.persistence.Id;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 
 @Entity
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Avatar {
 
     @Id
@@ -16,30 +22,8 @@ public class Avatar {
     @Column(length = 50, nullable = true)
     private String image;
 
-    public Avatar() {
-    }
-    
+    // Custom constructor for image field
     public Avatar(String image) {
-        this.image = image;
-    }
-
-    // Getter for avatarId
-    public Long getAvatarId() {
-        return avatarId;
-    }
-
-    // Setter for avatarId
-    public void setAvatarId(Long avatarId) {
-        this.avatarId = avatarId;
-    }
-
-    // Getter for image
-    public String getImage() {
-        return image;
-    }
-
-    // Setter for image
-    public void setImage(String image) {
         this.image = image;
     }
 }
