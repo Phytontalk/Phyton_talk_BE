@@ -31,6 +31,9 @@ public class Member {
     @Column(length = 200, nullable = false)
     private String password;
 
+    @Column(length = 200, nullable = true)
+    private String sns;
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "avatar_id", referencedColumnName = "avatarId")
     private Avatar avatar;
