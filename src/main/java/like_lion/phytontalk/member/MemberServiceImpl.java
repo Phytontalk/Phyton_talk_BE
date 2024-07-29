@@ -1,10 +1,8 @@
 package like_lion.phytontalk.member;
 
 import jakarta.servlet.http.HttpSession;
-import like_lion.phytontalk.member.dto.MemberInfoRequest;
-import like_lion.phytontalk.member.dto.MemberUpdateRequest;
-import like_lion.phytontalk.member.dto.SignInRequest;
-import like_lion.phytontalk.member.dto.SignupRequest;
+import like_lion.phytontalk.avatar.Avatar;
+import like_lion.phytontalk.member.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +21,7 @@ public class MemberServiceImpl implements MemberService {
     public void signUp(SignupRequest request) {
         if (findOneMemberByEmail(request.email()).isPresent())
             throw new IllegalArgumentException("이미 가입된 이메일입니다.");
+        Avatar defaultAvatar = avatarRepository.findById(1L).orElse(null); // ID가 1인 아바타를 기본 아바타로 설정
         Member member = Member.builder()
                 .email(request.email())
                 .name(request.name())
@@ -56,28 +55,50 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     @Transactional
-    public Member getMemberInfo(MemberInfoRequest request) {
-        Optional<Member> memberOpt = findOneMemberByEmail(request.email());
-        Member member = memberOpt.orElseThrow(() -> new IllegalArgumentException("가입되어 있지 않은 회원입니다."));
-        checkMemberPassword(member, request.password());
-        return member;
+    public MemberInfoResponse getMemberInfo(Long memberId) {
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new IllegalArgumentException("회원이 존재하지 않습니다."));
+        return new MemberInfoResponse(member.getName(), member.getEmail(), member.getSns(), member.getAvatar() != null ? member.getAvatar().getImage() : null);
     }
 
     @Override
     @Transactional
     public void updateMemberInfo(Long memberId, MemberUpdateRequest request) {
-        Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new IllegalArgumentException("회원이 존재하지 않습니다."));
+        Member member = memberRepository.findById(memberId).orElseThrow(() -> new IllegalArgumentException("회원이 존재하지 않습니다."));
+
         member.setName(request.name());
-        member.setEmail(request.email());
+        member.setSns(request.sns());
+
+        if (request.avatarId() != null) {
+            Avatar avatar = avatarRepository.findById(request.avatarId()).orElse(null);
+            member.setAvatar(avatar);
+        }
+
+        memberRepository.save(member);
+    }
+
+    @Override
+    @Transactional
+    public void updatePassword(Long memberId, PasswordUpdateRequest request) {
+        Member member = memberRepository.findById(memberId).orElseThrow(() -> new IllegalArgumentException("회원이 존재하지 않습니다."));
+
         member.setPassword(request.password());
         memberRepository.save(member);
     }
 
     @Override
     @Transactional
-    public void deleteMember(MemberInfoRequest request) {
-        Member member = getMemberInfo(request);
+    public void deleteMember(Long memberId) {
+        Member member = memberRepository.findById(memberId).orElseThrow(() -> new IllegalArgumentException("회원이 존재하지 않습니다."));
+
         memberRepository.delete(member);
+    }
+
+    @Override
+    @Transactional
+    public void verifyPassword(Long memberId, String password) {
+        Member member = memberRepository.findById(memberId).orElseThrow(() -> new IllegalArgumentException("회원이 존재하지 않습니다."));
+
+        checkMemberPassword(member, password);
     }
 }
