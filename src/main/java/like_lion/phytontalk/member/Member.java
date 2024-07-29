@@ -31,8 +31,9 @@ public class Member {
     @Column(length = 200, nullable = false)
     private String password;
 
-//    @OneToOne
-//    private Avatar avatar;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "avatar_id", referencedColumnName = "avatarId")
+    private Avatar avatar;
 
 //    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
 //    private List<Answer> answer;
@@ -52,4 +53,11 @@ public class Member {
         this.password = password;
     }
 
+    public void setSns(String sns) {
+        this.sns = sns;
+    }
+
+    public void setAvatar(Avatar avatar) {
+        this.avatar = avatar;
+    }
 }
