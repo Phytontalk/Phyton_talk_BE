@@ -1,10 +1,7 @@
 package like_lion.phytontalk.member;
 
 import jakarta.servlet.http.HttpSession;
-import like_lion.phytontalk.member.dto.MemberInfoRequest;
-import like_lion.phytontalk.member.dto.MemberUpdateRequest;
-import like_lion.phytontalk.member.dto.SignInRequest;
-import like_lion.phytontalk.member.dto.SignupRequest;
+import like_lion.phytontalk.member.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,32 +31,33 @@ public class MemberController {
     }
 
     // 사용자 정보 조회 (GET)
-    @GetMapping("/member")
-    public ResponseEntity<Member> getMemberInfo(@RequestParam String email, @RequestParam String password){
-        MemberInfoRequest request = new MemberInfoRequest(email, password);
-        Member member = memberServiceImpl.getMemberInfo(request);
+    @GetMapping("/member/{memberId}")
+    public ResponseEntity<MemberInfoResponse> getMemberInfo(@PathVariable Long memberId){
+        MemberInfoResponse member = memberServiceImpl.getMemberInfo(memberId);
         return ResponseEntity.status(HttpStatus.OK).body(member);
     }
 
-    // 사용자 정보 변경 요청 (PUT)
-    @PutMapping("/member")
-    public ResponseEntity<String> updateMemberInfo(@RequestBody MemberUpdateRequest request, @RequestParam String currentPassword, HttpSession session){
-        Member member = (Member) session.getAttribute("member");
-        if (member == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다.");
-        }
-        memberServiceImpl.checkMemberPassword(member, currentPassword);
-        memberServiceImpl.updateMemberInfo(member.getId(), request);
+    @PutMapping("/member/{memberId}")
+    public ResponseEntity<String> updateMemberInfo(@PathVariable Long memberId, @RequestBody MemberUpdateRequest request){
+        memberServiceImpl.updateMemberInfo(memberId, request);
         return ResponseEntity.status(HttpStatus.OK).body("회원정보 수정됨");
     }
 
-    // 탈퇴 (DELETE)
-    @DeleteMapping("/member")
-    public ResponseEntity<String> deleteMember(@RequestBody MemberInfoRequest request, HttpSession session){
-        memberServiceImpl.checkMemberPassword(memberServiceImpl.getMemberInfo(request), request.password());
-        memberServiceImpl.deleteMember(request);
-        session.invalidate();
-        return ResponseEntity.status(HttpStatus.OK).body("회원 탈퇴됨");
+    @PutMapping("/member/{memberId}/password")
+    public ResponseEntity<String> updatePassword(@PathVariable Long memberId, @RequestBody PasswordUpdateRequest request){
+        memberServiceImpl.updatePassword(memberId, request);
+        return ResponseEntity.status(HttpStatus.OK).body("비밀번호 수정됨");
     }
 
+    @PostMapping("/member/{memberId}/password")
+    public ResponseEntity<String> verifyPassword(@PathVariable Long memberId, @RequestBody PasswordUpdateRequest request){
+        memberServiceImpl.verifyPassword(memberId, request.password());
+        return ResponseEntity.status(HttpStatus.OK).body("비밀번호 확인됨");
+    }
+
+    @DeleteMapping("/member/{memberId}")
+    public ResponseEntity<String> deleteMember(@PathVariable Long memberId){
+        memberServiceImpl.deleteMember(memberId);
+        return ResponseEntity.status(HttpStatus.OK).body("회원 탈퇴됨");
+    }
 }
