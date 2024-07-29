@@ -10,5 +10,4 @@ public interface QuizService {
     QuizResponse updateQuiz(Long id, QuizRequest quizRequest);
     void deleteQuiz(Long id);
     List<QuizResponse> getAllQuiz();
-    List<QuizResponse> getDailyQuiz();
 }

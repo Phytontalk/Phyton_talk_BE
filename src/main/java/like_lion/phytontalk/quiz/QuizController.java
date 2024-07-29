@@ -39,10 +39,4 @@ public class QuizController {
         List<QuizResponse> quiz = quizService.getAllQuiz();
         return ResponseEntity.ok(quiz);
     }
-
-    @GetMapping("/daily")
-    public ResponseEntity<List<QuizResponse>> getDailyQuiz() { // 오늘의 퀴즈 조회
-        List<QuizResponse> quiz = quizService.getDailyQuiz();
-        return ResponseEntity.ok(quiz);
-    }
 }

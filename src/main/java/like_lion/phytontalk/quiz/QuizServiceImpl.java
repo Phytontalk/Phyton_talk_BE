@@ -4,8 +4,6 @@ import like_lion.phytontalk.quiz.dto.QuizRequest;
 import like_lion.phytontalk.quiz.dto.QuizResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -57,12 +55,6 @@ public class QuizServiceImpl implements QuizService {
     @Override
     public List<QuizResponse> getAllQuiz() { // 퀴즈 전체 조회
         return quizRepo.findAll().stream().map(this::mapToResponseDto).collect(Collectors.toList());
-    }
-
-    @Override
-    public List<QuizResponse> getDailyQuiz() { // 퀴즈 오늘의 문제
-        Pageable pageable = PageRequest.of(0, 10);
-        return quizRepo.findDailyQuiz(pageable).stream().map(this::mapToResponseDto).collect(Collectors.toList());
     }
 
     private QuizResponse mapToResponseDto(Quiz quiz) {
