@@ -1,11 +1,7 @@
 package like_lion.phytontalk.member;
 
 import jakarta.servlet.http.HttpSession;
-import like_lion.phytontalk.member.dto.MemberInfoRequest;
-import like_lion.phytontalk.member.dto.MemberUpdateRequest;
-import like_lion.phytontalk.member.dto.SignInRequest;
-import like_lion.phytontalk.member.dto.SignupRequest;
-import org.springframework.stereotype.Service;
+import like_lion.phytontalk.member.dto.*;
 
 import java.util.Optional;
 
@@ -18,9 +14,13 @@ public interface MemberService {
 
     void checkMemberPassword(Member member, String inputPassword);
 
-    Member getMemberInfo(MemberInfoRequest request);
+    MemberInfoResponse getMemberInfo(Long memberId);
 
     void updateMemberInfo(Long memberId, MemberUpdateRequest request);
 
-    void deleteMember(MemberInfoRequest request);
+    void updatePassword(Long memberId, PasswordUpdateRequest request);
+
+    void deleteMember(Long memberId);
+
+    void verifyPassword(Long memberId, String password);
 }
