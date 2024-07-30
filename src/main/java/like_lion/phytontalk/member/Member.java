@@ -30,7 +30,7 @@ public class Member {
     @Column(length = 200, nullable = false)
     private String password;
 
-    @Column(length = 200, nullable = true)
+    @Column(length = 200, nullable = false)
     private String sns;
 
     @OneToOne(cascade = CascadeType.ALL)
