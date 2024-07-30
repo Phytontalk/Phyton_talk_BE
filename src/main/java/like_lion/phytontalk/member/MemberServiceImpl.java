@@ -2,6 +2,7 @@ package like_lion.phytontalk.member;
 
 import jakarta.servlet.http.HttpSession;
 import like_lion.phytontalk.avatar.Avatar;
+import like_lion.phytontalk.avatar.AvatarRepository;
 import like_lion.phytontalk.member.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,7 @@ import java.util.Optional;
 public class MemberServiceImpl implements MemberService {
 
     private final MemberRepository memberRepository;
-
+    private final AvatarRepository avatarRepository;
     @Override
     @Transactional
     public void signUp(SignupRequest request) {
@@ -26,6 +27,7 @@ public class MemberServiceImpl implements MemberService {
                 .email(request.email())
                 .name(request.name())
                 .password(request.password())
+                .avatar(defaultAvatar)
                 .build();
         memberRepository.save(member);
     }
