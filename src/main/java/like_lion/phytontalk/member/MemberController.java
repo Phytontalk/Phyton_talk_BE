@@ -32,5 +32,4 @@ public class MemberController {
         session.invalidate();
         return ResponseEntity.status(HttpStatus.OK).body("로그아웃");
     }
-
 }
