@@ -1,6 +1,7 @@
 package like_lion.phytontalk.avatar;
 
 import like_lion.phytontalk.avatar.dto.AvatarRequest;
+//import like_lion.phytontalk.avatar.dto.AvatarResponse;
 import like_lion.phytontalk.avatar.dto.AvatarResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
