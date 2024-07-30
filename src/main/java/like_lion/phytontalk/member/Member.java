@@ -7,7 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
 import java.util.List;
 import java.util.Objects;
 
@@ -39,5 +38,4 @@ public class Member {
     public boolean checkPassword(String password){
         return Objects.equals(this.password, password);
     }
-
 }
