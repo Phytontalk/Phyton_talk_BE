@@ -20,16 +20,16 @@ public class AnswerServiceImpl implements AnswerService{
 
 //    private final QuizRepository quizRepository;
 //    private final DailyQuizService dailyQuizService;
-    @Transactional
-    @Override
+//    @Transactional
+//    @Override
     public void saveAnswer(Long memberId, AnswerRequset answerRequset) {
-        Optional<Member> member = memberRepository.findById(memberId);
-        member.orElseThrow(() -> new IllegalArgumentException("멤버가 존재하지 않습니다."));
-
-        DailyQuiz dailyQuiz = dailyQuizService.findDailyQuiz();
-
-        Answer answer = Answer.builder().member(member.get()).dailyQuiz(dailyQuiz).build();
-        answer.setAnswer(answerRequset.answer());
-        answerRepository.save(answer);
+//        Optional<Member> member = memberRepository.findById(memberId);
+//        member.orElseThrow(() -> new IllegalArgumentException("멤버가 존재하지 않습니다."));
+//
+//        DailyQuiz dailyQuiz = dailyQuizService.findDailyQuiz();
+//
+//        Answer answer = Answer.builder().member(member.get()).dailyQuiz(dailyQuiz).build();
+//        answer.setAnswer(answerRequset.answer());
+//        answerRepository.save(answer);
     }
 }
