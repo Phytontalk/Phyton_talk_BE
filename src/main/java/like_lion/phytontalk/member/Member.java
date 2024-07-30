@@ -1,17 +1,17 @@
 package like_lion.phytontalk.member;
 
 import jakarta.persistence.*;
-import like_lion.phytontalk.answer.Answer;
 import like_lion.phytontalk.avatar.Avatar;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import java.util.List;
+import lombok.Setter;
 import java.util.Objects;
 
 @Entity
 @Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -30,12 +30,14 @@ public class Member {
     @Column(length = 200, nullable = false)
     private String password;
 
-//    @OneToOne
-//    private Avatar avatar;
+    @Column(length = 200, nullable = true)
+    private String sns;
 
-//    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<Answer> answer;
-    public boolean checkPassword(String password){
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "avatar_id", referencedColumnName = "avatarId")
+    private Avatar avatar;
+
+    public boolean checkPassword(String password) {
         return Objects.equals(this.password, password);
     }
 }
