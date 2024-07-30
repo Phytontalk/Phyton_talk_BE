@@ -66,17 +66,17 @@ public class MemberServiceImpl implements MemberService {
     @Override
     @Transactional
     public void updateMemberInfo(Long memberId, MemberUpdateRequest request) {
-        Member member = memberRepository.findById(memberId).orElseThrow(() -> new IllegalArgumentException("회원이 존재하지 않습니다."));
-
-        member.setName(request.name());
-        member.setSns(request.sns());
-
-        if (request.avatarId() != null) {
-            Avatar avatar = avatarRepository.findById(request.avatarId()).orElse(null);
-            member.setAvatar(avatar);
-        }
-
-        memberRepository.save(member);
+//        Member member = memberRepository.findById(memberId).orElseThrow(() -> new IllegalArgumentException("회원이 존재하지 않습니다."));
+//
+//        member.setName(request.name());
+//        member.setSns(request.sns());
+//
+//        if (request.avatarId() != null) {
+//            Avatar avatar = avatarRepository.findById(request.avatarId()).orElse(null);
+//            member.setAvatar(avatar);
+//        }
+//
+//        memberRepository.save(member);
     }
 
     @Override
