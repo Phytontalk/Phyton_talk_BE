@@ -1,4 +1,3 @@
 package like_lion.phytontalk.member.dto;
 
-public class SignupRequest {
-}
+public record SignupRequest(String name, String email, String password) {}

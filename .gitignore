@@ -1,6 +1,7 @@
 HELP.md
 .gradle
 build/
+application.properties
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
@@ -39,3 +40,4 @@ out/
 ### Spring Boot application properties and YAML files
 application.properties
 application.yml
+
