@@ -2,7 +2,6 @@ package like_lion.phytontalk.dailyquiz;
 
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.sql.Timestamp;
 
 @Entity
