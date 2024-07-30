@@ -60,7 +60,12 @@ public class MemberServiceImpl implements MemberService {
     public MemberInfoResponse getMemberInfo(Long memberId) {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new IllegalArgumentException("회원이 존재하지 않습니다."));
-        return new MemberInfoResponse(member.getName(), member.getEmail(), member.getSns(), member.getAvatar() != null ? member.getAvatar().getImage() : null);
+        return new MemberInfoResponse(
+                member.getName(),
+                member.getEmail(),
+                member.getSns(),
+                member.getAvatar() != null ? member.getAvatar().getAvatarId() : null
+        );
     }
 
     @Override
