@@ -38,6 +38,5 @@ out/
 .vscode/
 
 ### Spring Boot application properties and YAML files
-application.properties
 application.yml
 
