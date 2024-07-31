@@ -28,6 +28,7 @@ public class MemberServiceImpl implements MemberService {
                 .name(request.name())
                 .password(request.password())
                 .avatar(defaultAvatar)
+                .sns(request.sns())
                 .build();
         memberRepository.save(member);
     }
