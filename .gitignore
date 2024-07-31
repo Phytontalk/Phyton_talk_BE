@@ -1,5 +1,6 @@
 HELP.md
 .gradle
+.DS.Store
 build/
 application.properties
 !gradle/wrapper/gradle-wrapper.jar
