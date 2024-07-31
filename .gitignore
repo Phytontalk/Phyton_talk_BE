@@ -4,6 +4,7 @@ HELP.md
 build/
 application.properties
 !gradle/wrapper/gradle-wrapper.jar
+src/main/resources/application.properties
 !**/src/main/**/build/
 !**/src/test/**/build/
 
@@ -39,6 +40,5 @@ out/
 .vscode/
 
 ### Spring Boot application properties and YAML files
-application.properties
 application.yml
 
