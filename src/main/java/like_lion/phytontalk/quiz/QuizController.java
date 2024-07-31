@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,7 +18,7 @@ public class QuizController {
     private final QuizService quizService;
 
     @PostMapping
-    public ResponseEntity<QuizResponse> createQuiz(@RequestBody QuizRequest quizRequest) { // 퀴즈 등록
+    public ResponseEntity<QuizResponse> createQuiz(@Validated @RequestBody QuizRequest quizRequest) { // 퀴즈 등록
         QuizResponse createQuiz = quizService.createQuiz(quizRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(createQuiz);
     }

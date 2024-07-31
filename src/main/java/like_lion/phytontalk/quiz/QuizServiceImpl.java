@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -22,8 +23,7 @@ public class QuizServiceImpl implements QuizService {
     @Transactional
     public QuizResponse createQuiz(QuizRequest quizRequest) { // 퀴즈 생성
         Quiz quiz = new Quiz();
-        Timestamp currentTime = new Timestamp(System.currentTimeMillis());
-        // Timestamp now = Timestamp.from(Instant.now()); 뭐가 다르지
+        Timestamp currentTime = Timestamp.from(Instant.now());
 
         quiz.setOption1(quizRequest.getOption1());
         quiz.setOption2(quizRequest.getOption2());
@@ -40,10 +40,18 @@ public class QuizServiceImpl implements QuizService {
         Optional<Quiz> quiz = quizRepo.findById(id);
         quiz.orElseThrow(()-> new RuntimeException("Quiz not found"));
         Quiz findQuiz = quiz.get();
+        Timestamp currentTime = Timestamp.from(Instant.now());
 
-        findQuiz.setOption1(quizRequest.getOption1());
-        findQuiz.setOption2(quizRequest.getOption2());
-        findQuiz.setType(quizRequest.getType());
+        if (quizRequest.getOption1() != null) {
+            findQuiz.setOption1(quizRequest.getOption1());
+        }
+        if (quizRequest.getOption2() != null) {
+            findQuiz.setOption2(quizRequest.getOption2());
+        }
+        if (quizRequest.getType() != null) {
+            findQuiz.setType(quizRequest.getType());
+        }
+        findQuiz.setUpdatedAt(currentTime);
 
         return mapToResponseDto(findQuiz);
     }

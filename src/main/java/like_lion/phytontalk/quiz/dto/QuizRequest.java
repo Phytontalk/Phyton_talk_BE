@@ -3,12 +3,10 @@ package like_lion.phytontalk.quiz.dto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.validation.annotation.Validated;
 
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Validated
 public class QuizRequest {
     private String option1;
     private String option2;
