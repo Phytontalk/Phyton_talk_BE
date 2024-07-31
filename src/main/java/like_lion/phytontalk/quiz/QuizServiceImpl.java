@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -21,10 +22,13 @@ public class QuizServiceImpl implements QuizService {
     @Transactional
     public QuizResponse createQuiz(QuizRequest quizRequest) { // 퀴즈 생성
         Quiz quiz = new Quiz();
+        Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+        // Timestamp now = Timestamp.from(Instant.now()); 뭐가 다르지
 
         quiz.setOption1(quizRequest.getOption1());
         quiz.setOption2(quizRequest.getOption2());
         quiz.setType(quizRequest.getType());
+        quiz.setCreatedAt(currentTime);
 
         Quiz savedQuiz = quizRepo.save(quiz);   // request로 받은 객체 저장
         return mapToResponseDto(savedQuiz);

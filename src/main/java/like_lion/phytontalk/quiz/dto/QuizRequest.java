@@ -1,14 +1,14 @@
 package like_lion.phytontalk.quiz.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 
-import java.sql.Timestamp;
-
-@Data
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Validated
 public class QuizRequest {
     private String option1;
     private String option2;

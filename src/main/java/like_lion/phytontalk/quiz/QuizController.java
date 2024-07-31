@@ -17,7 +17,7 @@ public class QuizController {
     private final QuizService quizService;
 
     @PostMapping
-    public ResponseEntity<QuizResponse> createQuiz(QuizRequest quizRequest) { // 퀴즈 등록
+    public ResponseEntity<QuizResponse> createQuiz(@RequestBody QuizRequest quizRequest) { // 퀴즈 등록
         QuizResponse createQuiz = quizService.createQuiz(quizRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(createQuiz);
     }
