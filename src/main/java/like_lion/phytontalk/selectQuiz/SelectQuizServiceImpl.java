@@ -6,6 +6,7 @@ import like_lion.phytontalk.quiz.Quiz;
 import like_lion.phytontalk.quiz.QuizRepository;
 import like_lion.phytontalk.quiz.dto.QuizResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class SelectQuizServiceImpl implements SelectQuizService {
@@ -29,27 +31,46 @@ public class SelectQuizServiceImpl implements SelectQuizService {
 
         // DailyQuiz가 없는 경우 새로 생성
         if (dailyQuiz == null) {
-            dailyQuiz = dailyQuizService.createDailyQuiz(today);
+            selectQuizzes(dailyQuiz, today);
+            dailyQuiz = dailyQuizService.findByCreatedAt(today);
         }
 
-        // Pageable을 사용하여 SelectQuiz 조회
+        // SelectQuiz 조회
         Pageable pageable = PageRequest.of(0, 10);
         List<SelectQuiz> selectQuizzes = selectQuizRepo.findByDailyQuizId(dailyQuiz.getDailyQuizId(), pageable).getContent();
 
-        // SelectQuiz를 QuizResponse로 변환
+        log.info("selectQuizzes: {}", selectQuizzes);
+
         List<QuizResponse> quizResponses = selectQuizzes.stream()
                 .map(this::convertToQuizResponse)
                 .collect(Collectors.toList());
 
-        // 빈 리스트가 아닐 경우 frequency를 업데이트
+        // frequency 업데이트
         if (!quizResponses.isEmpty()) {
-            updateQuizFrequencies(selectQuizzes);
+            updateQuizFrequency(selectQuizzes);
         }
 
         return quizResponses;
     }
 
-    private void updateQuizFrequencies(List<SelectQuiz> selectQuizzes) {    // 빈도 수 증가
+    public void selectQuizzes(DailyQuiz dailyQuiz, LocalDateTime today) {
+        dailyQuiz = dailyQuizService.createDailyQuiz(today);
+        log.info("created dailyQuiz: {}", dailyQuiz);
+
+        Pageable pageable = PageRequest.of(0, 10);
+        List<Quiz> selectQuizzes = selectQuizRepo.findDailyQuizzes(pageable).getContent();
+
+        // 퀴즈를 SelectQuiz 테이블에 삽입
+        for (Quiz quiz : selectQuizzes) {
+            SelectQuiz selectQuiz = new SelectQuiz();
+            selectQuiz.setQuiz(quiz);
+            selectQuiz.setDailyQuiz(dailyQuiz);
+            selectQuizRepo.save(selectQuiz);
+        }
+        log.info("create selected quizzes: {}", selectQuizzes);
+    }
+
+    private void updateQuizFrequency(List<SelectQuiz> selectQuizzes) {    // 빈도 수 증가
         for (SelectQuiz selectQuiz : selectQuizzes) {
             Quiz quiz = selectQuiz.getQuiz();
             quiz.setFrequency(quiz.getFrequency() + 1);
