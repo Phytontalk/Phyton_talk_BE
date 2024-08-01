@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,11 +39,9 @@ public class SelectQuizServiceImpl implements SelectQuizService {
         List<SelectQuiz> selectQuizzes = selectQuizRepo.findByDailyQuizId(dailyQuiz.getDailyQuizId(), pageable).getContent();
 
         log.info("selectQuizzes: {}", selectQuizzes);
-
         List<QuizResponse> quizResponses = selectQuizzes.stream()
                 .map(this::convertToQuizResponse)
                 .collect(Collectors.toList());
-
         // frequency 업데이트
         if (!quizResponses.isEmpty()) {
             updateQuizFrequency(selectQuizzes);
@@ -52,7 +49,6 @@ public class SelectQuizServiceImpl implements SelectQuizService {
 
         return quizResponses;
     }
-
     public void selectQuizzes(DailyQuiz dailyQuizToCreate, LocalDateTime today) {
         dailyQuizToCreate = dailyQuizService.createDailyQuiz(today);
         log.info("created dailyQuiz: {}", dailyQuizToCreate);

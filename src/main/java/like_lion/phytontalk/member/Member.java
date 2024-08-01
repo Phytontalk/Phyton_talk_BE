@@ -8,7 +8,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import java.util.List;
 import java.util.Objects;
 
@@ -33,7 +32,7 @@ public class Member {
     @Column(length = 200, nullable = false)
     private String password;
 
-    @Column(length = 200, nullable = true)
+    @Column(length = 200, nullable = false)
     private String sns;
 
     @OneToOne(cascade = CascadeType.ALL)

@@ -33,6 +33,7 @@ public class QuizController {
     public ResponseEntity<String> deleteQuiz(@PathVariable Long quizId) { // 퀴즈 삭제
         quizService.deleteQuiz(quizId);
         return ResponseEntity.status(HttpStatus.OK).body("퀴즈 삭제 완료");  // 응답 본문 필요없는 경우 빈 ResponseEntity 객체 생성
+
     }
 
     @GetMapping
