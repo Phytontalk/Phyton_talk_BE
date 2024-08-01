@@ -53,9 +53,9 @@ public class SelectQuizServiceImpl implements SelectQuizService {
         return quizResponses;
     }
 
-    public void selectQuizzes(DailyQuiz dailyQuiz, LocalDateTime today) {
-        dailyQuiz = dailyQuizService.createDailyQuiz(today);
-        log.info("created dailyQuiz: {}", dailyQuiz);
+    public void selectQuizzes(DailyQuiz dailyQuizToCreate, LocalDateTime today) {
+        dailyQuizToCreate = dailyQuizService.createDailyQuiz(today);
+        log.info("created dailyQuiz: {}", dailyQuizToCreate);
 
         Pageable pageable = PageRequest.of(0, 10);
         List<Quiz> selectQuizzes = selectQuizRepo.findDailyQuizzes(pageable).getContent();
@@ -64,7 +64,7 @@ public class SelectQuizServiceImpl implements SelectQuizService {
         for (Quiz quiz : selectQuizzes) {
             SelectQuiz selectQuiz = new SelectQuiz();
             selectQuiz.setQuiz(quiz);
-            selectQuiz.setDailyQuiz(dailyQuiz);
+            selectQuiz.setDailyQuiz(dailyQuizToCreate);
             selectQuizRepo.save(selectQuiz);
         }
         log.info("create selected quizzes: {}", selectQuizzes);
