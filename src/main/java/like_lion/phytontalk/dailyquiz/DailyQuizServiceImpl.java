@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -15,14 +15,16 @@ public class DailyQuizServiceImpl implements DailyQuizService {
 
     @Override
     @Transactional
-    public DailyQuiz createDailyQuiz(Timestamp today) { // 새로운 DailyQuiz 생성
+    public DailyQuiz createDailyQuiz(LocalDateTime today) { // 새로운 DailyQuiz 생성
         DailyQuiz dailyQuiz = new DailyQuiz();
         dailyQuiz.setCreatedAt(today);
         return dailyQuizRepo.save(dailyQuiz);
     }
 
     @Override
-    public DailyQuiz findByCreatedAt(Timestamp createdAt) {
-        return dailyQuizRepo.findByCreatedAt(createdAt);
+    public DailyQuiz findByCreatedAt(LocalDateTime today) {
+        return dailyQuizRepo.findByCreatedAt(today);
     }
+
+    // 일주일? 지나면 자동삭제?
 }

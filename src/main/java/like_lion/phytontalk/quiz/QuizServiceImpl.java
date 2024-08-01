@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -21,10 +21,11 @@ public class QuizServiceImpl implements QuizService {
     @Transactional
     public QuizResponse createQuiz(QuizRequest quizRequest) { // 퀴즈 생성
         Quiz quiz = new Quiz();
-
+        LocalDateTime currentTime = LocalDateTime.now();
         quiz.setOption1(quizRequest.getOption1());
         quiz.setOption2(quizRequest.getOption2());
         quiz.setType(quizRequest.getType());
+        quiz.setCreatedAt(currentTime);
 
         Quiz savedQuiz = quizRepo.save(quiz);   // request로 받은 객체 저장
         return mapToResponseDto(savedQuiz);
@@ -36,10 +37,18 @@ public class QuizServiceImpl implements QuizService {
         Optional<Quiz> quiz = quizRepo.findById(id);
         quiz.orElseThrow(()-> new RuntimeException("Quiz not found"));
         Quiz findQuiz = quiz.get();
+        LocalDateTime currentTime = LocalDateTime.now();
 
-        findQuiz.setOption1(quizRequest.getOption1());
-        findQuiz.setOption2(quizRequest.getOption2());
-        findQuiz.setType(quizRequest.getType());
+        if (quizRequest.getOption1() != null) {
+            findQuiz.setOption1(quizRequest.getOption1());
+        }
+        if (quizRequest.getOption2() != null) {
+            findQuiz.setOption2(quizRequest.getOption2());
+        }
+        if (quizRequest.getType() != null) {
+            findQuiz.setType(quizRequest.getType());
+        }
+        findQuiz.setUpdatedAt(currentTime);
 
         return mapToResponseDto(findQuiz);
     }
@@ -49,6 +58,7 @@ public class QuizServiceImpl implements QuizService {
     public void deleteQuiz(Long id) { // 퀴즈 삭제
         Optional<Quiz> quiz = quizRepo.findById(id);
         quiz.orElseThrow(()-> new RuntimeException("Quiz not found"));
+        // dailyquiz에 있을 경우 삭제 불가(예외처리 메시지 추가 필요)
         quizRepo.deleteById(id);
     }
 

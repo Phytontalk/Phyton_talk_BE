@@ -1,11 +1,13 @@
 package like_lion.phytontalk.quiz;
 
 import jakarta.persistence.*;
+import like_lion.phytontalk.selectQuiz.SelectQuiz;
 import lombok.*;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
-@Table(name = "Quiz")
+@Table(name = "quiz")
 @Getter
 @Setter
 @NoArgsConstructor  // 기본 생성자
@@ -29,12 +31,11 @@ public class Quiz {
     private int frequency = 0; // 기본값 0으로 설정
 
     @Column(name = "created_at", nullable = false) // 생성 일자
-    private Timestamp createdAt;
+    private LocalDateTime createdAt;
 
     @Column(name = "updated_at") // 수정 일자
-    private Timestamp updatedAt;
+    private LocalDateTime updatedAt;
 
-
-//    @ManyToOne(mappedBy = "quiz", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<###> ###; dailyQuiz
+    @OneToMany(mappedBy = "quiz")
+    private List<SelectQuiz> selectQuizzes;
 }

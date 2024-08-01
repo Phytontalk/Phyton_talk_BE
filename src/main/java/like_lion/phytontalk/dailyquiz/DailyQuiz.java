@@ -1,26 +1,26 @@
 package like_lion.phytontalk.dailyquiz;
 
 import jakarta.persistence.*;
+import like_lion.phytontalk.selectQuiz.SelectQuiz;
 import lombok.*;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
-@Table(name = "DailyQuiz")
+@Table(name = "daily_quiz")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class DailyQuiz {
-    // 정확히 오늘 날짜의 오늘의 퀴즈 반환 서비스 코드
-    // findby
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "daily_quiz_id") // 오늘의 문제 아이디
     private long dailyQuizId;
 
     @Column(name = "created_at")    // 생성 일자
-    private Timestamp createdAt;
+    private LocalDateTime createdAt;
 
-    //@ManyToOne
+    @OneToMany(mappedBy = "dailyQuiz")
+    private List<SelectQuiz> selectQuizzes;
 }
