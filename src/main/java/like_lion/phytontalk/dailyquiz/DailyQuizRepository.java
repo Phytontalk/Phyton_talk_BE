@@ -9,6 +9,6 @@ import java.time.LocalDateTime;
 
 @Repository
 public interface DailyQuizRepository extends JpaRepository<DailyQuiz, Long> {
-    @Query("SELECT dq FROM DailyQuiz dq WHERE DATE(dq.createdAt) = DATE(:createdAt)")
-    DailyQuiz findByCreatedAt(@Param("createdAt") LocalDateTime createdAt);
+    @Query("SELECT dq FROM DailyQuiz dq WHERE DATE(dq.createdAt) = DATE(:today)")
+    DailyQuiz findByCreatedAt(@Param("today") LocalDateTime today);
 }

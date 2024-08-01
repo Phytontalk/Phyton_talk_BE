@@ -30,9 +30,9 @@ public class QuizController {
     }
 
     @DeleteMapping("/{quizId}")
-    public ResponseEntity<Void> deleteQuiz(@PathVariable Long quizId) { // 퀴즈 삭제
+    public ResponseEntity<String> deleteQuiz(@PathVariable Long quizId) { // 퀴즈 삭제
         quizService.deleteQuiz(quizId);
-        return ResponseEntity.noContent().build();  // 응답 본문 필요없는 경우 빈 ResponseEntity 객체 생성
+        return ResponseEntity.status(HttpStatus.OK).body("퀴즈 삭제 완료");  // 응답 본문 필요없는 경우 빈 ResponseEntity 객체 생성
     }
 
     @GetMapping
