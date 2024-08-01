@@ -1,8 +1,10 @@
 package like_lion.phytontalk.quiz;
 
 import jakarta.persistence.*;
+import like_lion.phytontalk.selectQuiz.SelectQuiz;
 import lombok.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "quiz")
@@ -34,7 +36,6 @@ public class Quiz {
     @Column(name = "updated_at") // 수정 일자
     private LocalDateTime updatedAt;
 
-
-//    @ManyToOne(mappedBy = "quiz", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<###> ###; dailyQuiz
+    @OneToMany(mappedBy = "quiz")
+    private List<SelectQuiz> selectQuizzes;
 }
