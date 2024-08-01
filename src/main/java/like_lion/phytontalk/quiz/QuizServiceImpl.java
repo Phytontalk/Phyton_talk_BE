@@ -60,6 +60,7 @@ public class QuizServiceImpl implements QuizService {
     public void deleteQuiz(Long id) { // 퀴즈 삭제
         Optional<Quiz> quiz = quizRepo.findById(id);
         quiz.orElseThrow(()-> new RuntimeException("Quiz not found"));
+        // dailyquiz에 있을 경우 삭제 불가(예외처리 메시지 추가 필요)
         quizRepo.deleteById(id);
     }
 

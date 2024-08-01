@@ -22,7 +22,9 @@ public class DailyQuizServiceImpl implements DailyQuizService {
     }
 
     @Override
-    public DailyQuiz findByCreatedAt(LocalDateTime createdAt) {
-        return dailyQuizRepo.findByCreatedAt(createdAt);
+    public DailyQuiz findByCreatedAt(LocalDateTime today) {
+        return dailyQuizRepo.findByCreatedAt(today);
     }
+
+    // 일주일? 지나면 자동삭제?
 }
