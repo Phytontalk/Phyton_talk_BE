@@ -1,8 +1,8 @@
 package like_lion.phytontalk.dailyquiz;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 public interface DailyQuizService {
-    DailyQuiz createDailyQuiz(Timestamp today);
-    DailyQuiz findByCreatedAt(Timestamp createdAt);
+    DailyQuiz createDailyQuiz(LocalDateTime today);
+    DailyQuiz findByCreatedAt(LocalDateTime createdAt);
 }

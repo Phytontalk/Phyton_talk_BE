@@ -11,7 +11,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,7 +24,7 @@ public class SelectQuizServiceImpl implements SelectQuizService {
 
     @Override
     public List<QuizResponse> getDailyQuiz() {
-        Timestamp today = getTodayDate();
+        LocalDateTime today = LocalDateTime.now();
         DailyQuiz dailyQuiz = dailyQuizService.findByCreatedAt(today);
 
         // DailyQuiz가 없는 경우 새로 생성
@@ -50,12 +49,6 @@ public class SelectQuizServiceImpl implements SelectQuizService {
         return quizResponses;
     }
 
-    private Timestamp getTodayDate() {
-        // 현재 날짜와 시간을 Timestamp로 반환 (시간은 00:00:00으로 설정)
-        LocalDateTime now = LocalDateTime.now().withHour(0).withMinute(0).withSecond(0).withNano(0);
-        return Timestamp.valueOf(now);
-    }
-
     private void updateQuizFrequencies(List<SelectQuiz> selectQuizzes) {    // 빈도 수 증가
         for (SelectQuiz selectQuiz : selectQuizzes) {
             Quiz quiz = selectQuiz.getQuiz();
@@ -76,5 +69,4 @@ public class SelectQuizServiceImpl implements SelectQuizService {
                 quiz.getUpdatedAt()
         );
     }
-
 }

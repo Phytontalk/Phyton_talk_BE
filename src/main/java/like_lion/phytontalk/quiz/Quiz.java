@@ -2,7 +2,7 @@ package like_lion.phytontalk.quiz;
 
 import jakarta.persistence.*;
 import lombok.*;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "Quiz")
@@ -29,10 +29,10 @@ public class Quiz {
     private int frequency = 0; // 기본값 0으로 설정
 
     @Column(name = "created_at", nullable = false) // 생성 일자
-    private Timestamp createdAt;
+    private LocalDateTime createdAt;
 
     @Column(name = "updated_at") // 수정 일자
-    private Timestamp updatedAt;
+    private LocalDateTime updatedAt;
 
 
 //    @ManyToOne(mappedBy = "quiz", cascade = CascadeType.ALL, orphanRemoval = true)

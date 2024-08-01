@@ -5,10 +5,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Repository
 public interface DailyQuizRepository extends JpaRepository<DailyQuiz, Long> {
     @Query("SELECT dq FROM DailyQuiz dq WHERE DATE(dq.createdAt) = DATE(:createdAt)")
-    DailyQuiz findByCreatedAt(@Param("createdAt") Timestamp createdAt);
+    DailyQuiz findByCreatedAt(@Param("createdAt") LocalDateTime createdAt);
 }

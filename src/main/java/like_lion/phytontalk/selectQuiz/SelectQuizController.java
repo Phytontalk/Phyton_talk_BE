@@ -15,7 +15,6 @@ import java.util.List;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class SelectQuizController {
     private final SelectQuizService selectQuizService;
-// 지금 quizResponse랑 SelectQuizService가 혼용되어 있음 확인 필요
     @GetMapping("/daily")
     public ResponseEntity<List<QuizResponse>> getDailyQuiz() { // 오늘의 퀴즈 조회
         List<QuizResponse> quiz = selectQuizService.getDailyQuiz();

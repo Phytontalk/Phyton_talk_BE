@@ -2,7 +2,7 @@ package like_lion.phytontalk.dailyquiz;
 
 import jakarta.persistence.*;
 import lombok.*;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "DailyQuiz")
@@ -20,7 +20,7 @@ public class DailyQuiz {
     private long dailyQuizId;
 
     @Column(name = "created_at")    // 생성 일자
-    private Timestamp createdAt;
+    private LocalDateTime createdAt;
 
     //@ManyToOne
 }

@@ -1,4 +1,4 @@
-package like_lion.phytontalk.dailyquiz.Dto;
+package like_lion.phytontalk.dailyquiz.dto;
 
 import lombok.Getter;
 

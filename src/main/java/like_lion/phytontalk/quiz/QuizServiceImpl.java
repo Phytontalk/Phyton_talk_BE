@@ -7,8 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Timestamp;
-import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -23,7 +22,7 @@ public class QuizServiceImpl implements QuizService {
     @Transactional
     public QuizResponse createQuiz(QuizRequest quizRequest) { // 퀴즈 생성
         Quiz quiz = new Quiz();
-        Timestamp currentTime = Timestamp.from(Instant.now());
+        LocalDateTime currentTime = LocalDateTime.now();
 
         quiz.setOption1(quizRequest.getOption1());
         quiz.setOption2(quizRequest.getOption2());
@@ -40,7 +39,7 @@ public class QuizServiceImpl implements QuizService {
         Optional<Quiz> quiz = quizRepo.findById(id);
         quiz.orElseThrow(()-> new RuntimeException("Quiz not found"));
         Quiz findQuiz = quiz.get();
-        Timestamp currentTime = Timestamp.from(Instant.now());
+        LocalDateTime currentTime = LocalDateTime.now();
 
         if (quizRequest.getOption1() != null) {
             findQuiz.setOption1(quizRequest.getOption1());

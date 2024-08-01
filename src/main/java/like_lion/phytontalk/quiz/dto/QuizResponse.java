@@ -1,11 +1,11 @@
 package like_lion.phytontalk.quiz.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import java.sql.Timestamp;
-@Data
+import java.time.LocalDateTime;
+
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class QuizResponse {
@@ -14,6 +14,6 @@ public class QuizResponse {
     private String option2;
     private String type;
     private int frequency;
-    private Timestamp createdAt;
-    private Timestamp updatedAt;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 }
