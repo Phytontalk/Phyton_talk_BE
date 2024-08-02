@@ -29,6 +29,7 @@ public class MemberServiceImpl implements MemberService {
                 .password(request.password())
                 .avatar(defaultAvatar)
                 .sns(request.sns())
+                .birthDate(request.birthDate())
                 .build();
         memberRepository.save(member);
     }
@@ -65,7 +66,8 @@ public class MemberServiceImpl implements MemberService {
                 member.getName(),
                 member.getEmail(),
                 member.getSns(),
-                member.getAvatar() != null ? member.getAvatar().getAvatarId() : null
+                member.getAvatar() != null ? member.getAvatar().getAvatarId() : null,
+                member.getBirthYear()
         );
     }
 
