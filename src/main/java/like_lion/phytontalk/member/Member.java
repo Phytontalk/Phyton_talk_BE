@@ -8,6 +8,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
@@ -42,7 +44,15 @@ public class Member {
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Answer> answers;
 
+    @Column(nullable = false)
+    private LocalDate birthDate;
+
     public boolean checkPassword(String password) {
         return Objects.equals(this.password, password);
     }
+
+    public int getBirthYear() {
+        return birthDate.getYear();
+    }
+
 }
