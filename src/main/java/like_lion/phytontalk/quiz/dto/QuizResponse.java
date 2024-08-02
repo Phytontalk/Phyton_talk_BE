@@ -9,7 +9,6 @@ import java.sql.Timestamp;
 
 @Getter
 @Setter
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class QuizResponse {

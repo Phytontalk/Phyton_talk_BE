@@ -67,8 +67,7 @@ public class MemberServiceImpl implements MemberService {
                 member.getEmail(),
                 member.getSns(),
                 member.getAvatar() != null ? member.getAvatar().getAvatarId() : null,
-                member.getBirthYear()
-        );
+                member.getBirthDate());
     }
 
     @Override

@@ -45,14 +45,9 @@ public class Member {
     private List<Answer> answers;
 
     @Column(nullable = false)
-    private LocalDate birthDate;
+    private String birthDate;
 
     public boolean checkPassword(String password) {
         return Objects.equals(this.password, password);
     }
-
-    public int getBirthYear() {
-        return birthDate.getYear();
-    }
-
 }
