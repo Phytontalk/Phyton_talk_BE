@@ -1,6 +1,7 @@
 package like_lion.phytontalk.member;
 
 import jakarta.servlet.http.HttpSession;
+import like_lion.phytontalk.friend.dto.FriendListResponse;
 import like_lion.phytontalk.member.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -59,5 +60,11 @@ public class MemberController {
     public ResponseEntity<String> deleteMember(@PathVariable Long memberId){
         memberServiceImpl.deleteMember(memberId);
         return ResponseEntity.status(HttpStatus.OK).body("회원 탈퇴됨");
+    }
+
+    @GetMapping("/friend/{memberId}")
+    public ResponseEntity<FriendListResponse> getRecommendedFriends(@PathVariable Long memberId) {
+        FriendListResponse friends = memberServiceImpl.getRecommendedFriends(memberId);
+        return ResponseEntity.status(HttpStatus.OK).body(friends);
     }
 }
