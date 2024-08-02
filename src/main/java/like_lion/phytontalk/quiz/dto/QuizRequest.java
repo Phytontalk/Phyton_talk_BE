@@ -3,12 +3,11 @@ package like_lion.phytontalk.quiz.dto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-@Getter
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
+
+@Getter
 
 @Data
 @NoArgsConstructor
