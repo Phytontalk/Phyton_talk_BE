@@ -44,7 +44,7 @@ public class Member {
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Answer> answers;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String birthDate;
 
     public boolean checkPassword(String password) {
