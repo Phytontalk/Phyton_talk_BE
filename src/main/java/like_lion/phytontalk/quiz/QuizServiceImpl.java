@@ -3,6 +3,7 @@ package like_lion.phytontalk.quiz;
 import like_lion.phytontalk.quiz.dto.QuizRequest;
 import like_lion.phytontalk.quiz.dto.QuizResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor(onConstructor_ = {@Autowired})
@@ -49,6 +51,9 @@ public class QuizServiceImpl implements QuizService {
             findQuiz.setType(quizRequest.getType());
         }
         findQuiz.setUpdatedAt(currentTime);
+
+        log.info("to update Quiz {}", quizRequest.getType());
+        log.info("Updating Quiz {}", findQuiz.getType());
 
         return mapToResponseDto(findQuiz);
     }
