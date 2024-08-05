@@ -1,6 +1,7 @@
 package like_lion.phytontalk.member;
 
 import jakarta.servlet.http.HttpSession;
+import like_lion.phytontalk.friend.dto.FriendListResponse;
 import like_lion.phytontalk.member.dto.*;
 
 import java.util.Optional;
@@ -23,4 +24,7 @@ public interface MemberService {
     void deleteMember(Long memberId);
 
     void verifyPassword(Long memberId, String password);
+
+    FriendListResponse getRecommendedFriends(Long memberId);
+
 }
