@@ -9,7 +9,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
@@ -45,7 +44,7 @@ public class Member {
     private List<Answer> answers;
 
     @Column(nullable = true)
-    private String birthDate;
+    private String birthYear;
 
     public boolean checkPassword(String password) {
         return Objects.equals(this.password, password);

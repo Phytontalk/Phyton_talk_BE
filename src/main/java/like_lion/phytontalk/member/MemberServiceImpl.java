@@ -33,7 +33,7 @@ public class MemberServiceImpl implements MemberService {
                 .password(request.password())
                 .avatar(defaultAvatar)
                 .sns(request.sns())
-                .birthDate(request.birthDate())
+                .birthYear(request.birthYear())
                 .build();
         memberRepository.save(member);
     }
@@ -72,7 +72,7 @@ public class MemberServiceImpl implements MemberService {
                 member.getEmail(),
                 member.getSns(),
                 member.getAvatar() != null ? member.getAvatar().getAvatarId() : null,
-                member.getBirthDate());
+                member.getBirthYear());
     }
 
     @Override
@@ -186,7 +186,7 @@ public class MemberServiceImpl implements MemberService {
                 friend.getSns(),
                 avatarId,
                 type,
-                friend.getBirthDate().getYear() // 생년 반환
+                friend.getBirthYear() // 생년 반환
         );
     }
 }
