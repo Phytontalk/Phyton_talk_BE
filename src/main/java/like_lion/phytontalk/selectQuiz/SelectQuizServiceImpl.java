@@ -12,6 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,7 +25,7 @@ public class SelectQuizServiceImpl implements SelectQuizService {
     private final QuizRepository quizRepo;
 
     @Override
-    public List<QuizResponse> getDailyQuiz() {
+    public DailyQuizResponse getDailyQuiz() {
         LocalDateTime today = LocalDateTime.now();
         DailyQuiz dailyQuiz = dailyQuizService.findByCreatedAt(today);
 
@@ -39,15 +40,17 @@ public class SelectQuizServiceImpl implements SelectQuizService {
         List<SelectQuiz> selectQuizzes = selectQuizRepo.findByDailyQuizId(dailyQuiz.getDailyQuizId(), pageable).getContent();
 
         log.info("selectQuizzes: {}", selectQuizzes);
-        List<QuizResponse> quizResponses = selectQuizzes.stream()
-                .map(this::convertToQuizResponse)
+        List<DailyQuizResponse.Question> quizResponses = selectQuizzes.stream()
+                .map(this::convertToDailyQuizResponse)
                 .collect(Collectors.toList());
         // frequency 업데이트
+
+
         if (!quizResponses.isEmpty()) {
             updateQuizFrequency(selectQuizzes);
         }
 
-        return quizResponses;
+        return new DailyQuizResponse(quizResponses);
     }
     public void selectQuizzes(DailyQuiz dailyQuizToCreate, LocalDateTime today) {
         dailyQuizToCreate = dailyQuizService.createDailyQuiz(today);
@@ -74,6 +77,15 @@ public class SelectQuizServiceImpl implements SelectQuizService {
         }
     }
 
+    private DailyQuizResponse.Question convertToDailyQuizResponse(SelectQuiz selectQuiz){
+        Quiz quiz = selectQuiz.getQuiz();
+        List<String> options = new ArrayList<>();
+        options.add(quiz.getOption1());
+        options.add(quiz.getOption2());
+        DailyQuizResponse.Question dailyQuizResponse = new DailyQuizResponse.Question(quiz.getQuizId(), options);
+        System.out.println(dailyQuizResponse);
+        return dailyQuizResponse;
+    }
     private QuizResponse convertToQuizResponse(SelectQuiz selectQuiz) {
         Quiz quiz = selectQuiz.getQuiz();
         return new QuizResponse(

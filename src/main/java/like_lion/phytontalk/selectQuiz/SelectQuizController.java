@@ -18,8 +18,8 @@ public class SelectQuizController {
     private final SelectQuizService selectQuizService;
 
     @GetMapping("/daily")
-    public ResponseEntity<List<QuizResponse>> getDailyQuiz() { // 오늘의 퀴즈 조회
-        List<QuizResponse> quiz = selectQuizService.getDailyQuiz();
+    public ResponseEntity<DailyQuizResponse> getDailyQuiz() { // 오늘의 퀴즈 조회
+        DailyQuizResponse quiz = selectQuizService.getDailyQuiz();
         return ResponseEntity.status(HttpStatus.OK).body(quiz);
     }
 }
