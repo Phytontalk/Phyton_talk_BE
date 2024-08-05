@@ -36,11 +36,12 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     @Transactional
-    public void signIn(SignInRequest request, HttpSession session) {
+    public Member signIn(SignInRequest request, HttpSession session) {
         Optional<Member> loginRequestMember = findOneMemberByEmail(request.email());
         Member signedInMember = loginRequestMember.orElseThrow(() -> new IllegalArgumentException("가입되어 있지 않은 회원입니다."));
         checkMemberPassword(signedInMember, request.password());
         session.setAttribute("member", signedInMember); //세션에 멤버 셋팅
+        return signedInMember;
     }
 
     @Override

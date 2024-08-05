@@ -8,7 +8,7 @@ import java.util.Optional;
 public interface MemberService {
     void signUp(SignupRequest request);
 
-    void signIn(SignInRequest request, HttpSession session);
+    Member signIn(SignInRequest request, HttpSession session);
 
     Optional<Member> findOneMemberByEmail(String email);
 

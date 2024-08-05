@@ -1,11 +1,14 @@
 package like_lion.phytontalk.member;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import like_lion.phytontalk.member.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import jakarta.servlet.http.HttpServletResponse;
 
 @RestController
 @RequiredArgsConstructor
@@ -19,9 +22,14 @@ public class MemberController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> signIn(@RequestBody SignInRequest request, HttpSession session){
-        memberServiceImpl.signIn(request, session);
-        return ResponseEntity.status(HttpStatus.OK).body("로그인 성공");
+    public ResponseEntity<MemberLoginResponse> signIn(@RequestBody SignInRequest request, HttpSession session, HttpServletResponse response, HttpServletRequest R){
+        Member member = memberServiceImpl.signIn(request, session);
+        response.setHeader("memberId", String.valueOf(member.getId()));
+        Cookie cookie = new Cookie("user", String.valueOf(member.getId()));
+        cookie.setPath("/"); // 쿠키의 경로 설정
+        response.addCookie(cookie);
+
+        return ResponseEntity.status(HttpStatus.OK).body(new MemberLoginResponse(member.getId()));
     }
 
     @PostMapping("/logout")
