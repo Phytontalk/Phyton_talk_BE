@@ -7,13 +7,11 @@ import like_lion.phytontalk.avatar.AvatarRepository;
 import like_lion.phytontalk.friend.dto.FriendListResponse;
 import like_lion.phytontalk.friend.dto.FriendResponse;
 import like_lion.phytontalk.member.dto.*;
-import like_lion.phytontalk.quiz.Quiz;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
