@@ -8,12 +8,14 @@ import like_lion.phytontalk.friend.dto.FriendListResponse;
 import like_lion.phytontalk.friend.dto.FriendResponse;
 import like_lion.phytontalk.member.dto.*;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -78,17 +80,26 @@ public class MemberServiceImpl implements MemberService {
     @Override
     @Transactional
     public void updateMemberInfo(Long memberId, MemberUpdateRequest request) {
-//        Member member = memberRepository.findById(memberId).orElseThrow(() -> new IllegalArgumentException("회원이 존재하지 않습니다."));
-//
-//        member.setName(request.name());
-//        member.setSns(request.sns());
-//
-//        if (request.avatarId() != null) {
-//            Avatar avatar = avatarRepository.findById(request.avatarId()).orElse(null);
-//            member.setAvatar(avatar);
-//        }
-//
-//        memberRepository.save(member);
+        Member member = memberRepository.findById(memberId).orElseThrow(() -> new IllegalArgumentException("회원이 존재하지 않습니다."));
+
+        if(request.name() != null) {
+            member.setName(request.name());
+        }
+
+        if(request.sns() != null) {
+            member.setName(request.sns());
+        }
+
+        if (request.avatarId() != null) {
+            Avatar avatar = avatarRepository.findById(request.avatarId()).orElse(null);
+            log.info("avatar {}", avatar);
+            member.setAvatar(avatar);
+        }
+
+        log.info("updating member info {}", request.avatarId());
+
+        memberRepository.save(member);
+        log.info("updated {}", member.getAvatar());
     }
 
     @Override

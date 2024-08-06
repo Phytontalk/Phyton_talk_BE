@@ -24,7 +24,7 @@ public class QuizController {
     }
 
     @PatchMapping("/{quizId}")
-    public ResponseEntity<QuizResponse> updateQuiz(@PathVariable Long quizId, QuizRequest quizRequest) { // 퀴즈 수정
+    public ResponseEntity<QuizResponse> updateQuiz(@PathVariable Long quizId, @RequestBody QuizRequest quizRequest) { // 퀴즈 수정
         QuizResponse updateQuiz = quizService.updateQuiz(quizId, quizRequest);
         return ResponseEntity.ok(updateQuiz);
     }
