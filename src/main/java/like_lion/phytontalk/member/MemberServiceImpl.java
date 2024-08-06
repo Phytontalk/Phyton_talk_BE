@@ -2,6 +2,7 @@ package like_lion.phytontalk.member;
 
 import jakarta.servlet.http.HttpSession;
 import like_lion.phytontalk.answer.Answer;
+import like_lion.phytontalk.answer.AnswerServiceImpl;
 import like_lion.phytontalk.avatar.Avatar;
 import like_lion.phytontalk.avatar.AvatarRepository;
 import like_lion.phytontalk.friend.dto.FriendListResponse;
@@ -23,6 +24,7 @@ public class MemberServiceImpl implements MemberService {
 
     private final MemberRepository memberRepository;
     private final AvatarRepository avatarRepository;
+    private final AnswerServiceImpl answerService;
     @Override
     @Transactional
     public void signUp(SignupRequest request) {
@@ -133,7 +135,9 @@ public class MemberServiceImpl implements MemberService {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new IllegalArgumentException("회원이 존재하지 않습니다."));
 
-        List<Answer> memberAnswers = memberRepository.findAnswersByMemberId(memberId);
+        List<Answer> memberAnswers = member.getAnswers();
+        Answer myAnswer = answerService.getTodayAnswer(memberAnswers);
+
         List<Member> allMembers = memberRepository.findAll();
 
         Member mostSimilar = null;
@@ -146,9 +150,13 @@ public class MemberServiceImpl implements MemberService {
                 continue; // 자기 자신은 제외
             }
 
-            List<Answer> friendAnswers = memberRepository.findAnswersByMemberId(friend.getId());
-            int matchCount = calculateMatchCount(memberAnswers, friendAnswers);
+            List<Answer> friendAnswers = friend.getAnswers();
+            Answer friendAnswer  = answerService.getTodayAnswer(friendAnswers);
+            if (friendAnswer == null){
+                continue;
+            }
 
+            int matchCount = calculateMatchCount(myAnswer, friendAnswer);
             if (matchCount > maxMatchCount) {
                 maxMatchCount = matchCount;
                 mostSimilar = friend;
@@ -159,6 +167,9 @@ public class MemberServiceImpl implements MemberService {
                 leastSimilar = friend;
             }
         }
+        if (mostSimilar == null || leastSimilar == null){
+            throw new IllegalArgumentException("오늘의 문제를 해결한 사람이 없습니다! 조금 이후에 다시 확인해주세요!");
+        }
 
         FriendResponse mostSimilarResponse = createFriendResponse(mostSimilar, "good");
         FriendResponse leastSimilarResponse = createFriendResponse(leastSimilar, "bad");
@@ -167,12 +178,8 @@ public class MemberServiceImpl implements MemberService {
         return new FriendListResponse(friendResponses);
     }
 
-    private int calculateMatchCount(List<Answer> memberAnswers, List<Answer> friendAnswers) {
+    private int calculateMatchCount(Answer memberAnswer, Answer friendAnswer) {
         int matchCount = 0;
-        for (int i = 0; i < memberAnswers.size(); i++) {
-            Answer memberAnswer = memberAnswers.get(i);
-            Answer friendAnswer = friendAnswers.get(i);
-
             // 각 답변의 10개의 항목을 비교하여 일치하는 수를 계산
             if (memberAnswer.getAnswer1().equals(friendAnswer.getAnswer1())) matchCount++;
             if (memberAnswer.getAnswer2().equals(friendAnswer.getAnswer2())) matchCount++;
@@ -184,7 +191,6 @@ public class MemberServiceImpl implements MemberService {
             if (memberAnswer.getAnswer8().equals(friendAnswer.getAnswer8())) matchCount++;
             if (memberAnswer.getAnswer9().equals(friendAnswer.getAnswer9())) matchCount++;
             if (memberAnswer.getAnswer10().equals(friendAnswer.getAnswer10())) matchCount++;
-        }
         return matchCount;
     }
 
